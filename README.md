@@ -118,7 +118,7 @@ https://youtu.be/PwTAFrqujRY?si=dWdYGk5if_KVRfPN
 
 ```bash
 # 1. Clone and setup
-git clone https://github.com/Cyberpunk-San/spectral-solver/tree/main
+git clone https://github.com/Cyberpunk-San/spectral-solver.git
 cd spectral-solver-private
 pip install -r requirements.txt
 
