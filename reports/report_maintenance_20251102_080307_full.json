@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "report_id": "report_maintenance_20251102_080307",
+    "thread_id": "upload_20251102_080307",
+    "audience": "maintenance",
+    "created_at": "2025-11-02T02:33:07.614050+00:00",
+    "urgency": "high",
+    "confidence": 0.7
+  },
+  "content": {
+    "title": "Maintenance Work Order - Motor-001",
+    "summary": "Required: - Anomaly count: Four anomalies detected across various features in the dataset related to patient vital signs during medical monitoring.\n- Feature categories analyzed include statistical deviations from norms, distribution characteristics of data points (skewness and kurtosis), as well as temporal patterns over time which were not detailed here but presumed part of a broader analysis given that no specific findings are reported in this section.\n- The dataset originates from 'medical.csv' with metadata indicating high sample rate, moderate RPM (revolutions per minute) likely referring to the rotation speed of mechanical components within medical devices or machinery used for patient monitoring, and a unique machine identifier suggesting data was collected in situ on Motor-001 device/machine.\n- The signal type is 'vibration', which may indicate that vibrations from equipment are being monitored as they can affect the accuracy of vital sign measurements like heart rate or ECG signals if not properly accounted for within medical monitoring systems.\n. 0 maintenance actions identified.",
+    "findings": [
+      {
+        "section": "Problem Description",
+        "content": "- Anomaly count: Four anomalies detected across various features in the dataset related to patient vital signs during medical monitoring.\n- Feature categories analyzed include statistical deviations from norms, distribution characteristics of data points (skewness and kurtosis), as well as temporal patterns over time which were not detailed here but presumed part of a broader analysis given that no specific findings are reported in this section.\n- The dataset originates from 'medical.csv' with metadata indicating high sample rate, moderate RPM (revolutions per minute) likely referring to the rotation speed of mechanical components within medical devices or machinery used for patient monitoring, and a unique machine identifier suggesting data was collected in situ on Motor-001 device/machine.\n- The signal type is 'vibration', which may indicate that vibrations from equipment are being monitored as they can affect the accuracy of vital sign measurements like heart rate or ECG signals if not properly accounted for within medical monitoring systems.\n"
+      },
+      {
+        "section": "Likely Causes",
+        "content": []
+      },
+      {
+        "section": "Anomalies Detected",
+        "content": "4 issues found"
+      }
+    ],
+    "recommendations": [],
+    "urgency": "high"
+  },
+  "artifacts": {
+    "summary_chart": "reports\\report_maintenance_20251102_080307_chart.png",
+    "signal_plot": "artifacts/signal_plot_04c96b51.png",
+    "anomaly_highlights": "artifacts/anomaly_highlights_582e92b8.png",
+    "anomaly_trend": "artifacts/trend_anomalies_07f863e1.png",
+    "anomaly_heatmap": "artifacts/anomaly_heatmap_e563cd9c.png",
+    "json_report": "reports\\report_maintenance_20251102_080307.json"
+  }
+}

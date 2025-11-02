@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "report_id": "report_manager_20251102_071008",
+    "thread_id": "streamlit_20251102_071008",
+    "audience": "manager",
+    "created_at": "2025-11-02T01:40:08.223994+00:00",
+    "urgency": "low",
+    "confidence": 0.0
+  },
+  "content": {
+    "title": "Equipment Health Report - Motor-001",
+    "summary": "Diagnosis: Investigation failed due to technical error. Business Impact: Low - Monitor condition",
+    "findings": [
+      {
+        "section": "Executive Summary",
+        "content": "Investigation failed due to technical error"
+      },
+      {
+        "section": "Business Impact",
+        "content": "Low - Monitor condition"
+      },
+      {
+        "section": "Financial Implications",
+        "content": "$ - Routine check"
+      },
+      {
+        "section": "Confidence Level",
+        "content": "0.0%"
+      }
+    ],
+    "recommendations": [
+      {
+        "action": "Retry investigation",
+        "business_case": "Preventive maintenance"
+      },
+      {
+        "action": "Check system configuration",
+        "business_case": "Preventive maintenance"
+      }
+    ],
+    "urgency": "low"
+  },
+  "artifacts": {
+    "json_report": "reports\\report_manager_20251102_071008.json"
+  }
+}

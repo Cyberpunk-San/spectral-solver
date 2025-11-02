@@ -1,0 +1,45 @@
+{
+  "report_id": "report_maintenance_20251102_071008",
+  "audience": "maintenance",
+  "title": "Maintenance Work Order - Motor-001",
+  "summary": "Required: Investigation failed due to technical error. 2 maintenance actions identified.",
+  "findings": [
+    {
+      "section": "Problem Description",
+      "content": "Investigation failed due to technical error"
+    },
+    {
+      "section": "Likely Causes",
+      "content": [
+        "System error during analysis"
+      ]
+    },
+    {
+      "section": "Anomalies Detected",
+      "content": "0 issues found"
+    }
+  ],
+  "recommendations": [
+    {
+      "action": "Retry investigation",
+      "priority": "medium",
+      "estimated_time": "1-2 hours",
+      "tools_required": [
+        "Vibration meter",
+        "Basic hand tools"
+      ]
+    },
+    {
+      "action": "Check system configuration",
+      "priority": "high",
+      "estimated_time": "1-2 hours",
+      "tools_required": [
+        "Vibration meter",
+        "Basic hand tools"
+      ]
+    }
+  ],
+  "urgency": "low",
+  "confidence": 0.0,
+  "timestamp": "2025-11-02T01:40:08.220133+00:00"
+}

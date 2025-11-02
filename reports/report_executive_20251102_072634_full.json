@@ -1,0 +1,42 @@
+{
+  "metadata": {
+    "report_id": "report_executive_20251102_072634",
+    "thread_id": "unknown",
+    "audience": "executive",
+    "created_at": "2025-11-02T01:56:34.430310+00:00",
+    "urgency": "medium",
+    "confidence": 0.0
+  },
+  "content": {
+    "title": "Asset Health Briefing - Unknown Machine",
+    "summary": "Equipment requires attention: Investigation failed due to technical error",
+    "findings": [
+      {
+        "section": "Situation",
+        "content": "Investigation failed due to technical error"
+      },
+      {
+        "section": "Confidence",
+        "content": "0.0% certainty"
+      },
+      {
+        "section": "Strategic Importance",
+        "content": "Maintain operational continuity"
+      }
+    ],
+    "recommendations": [
+      {
+        "action": "Retry investigation",
+        "rationale": "Risk mitigation"
+      },
+      {
+        "action": "Check system configuration",
+        "rationale": "Risk mitigation"
+      }
+    ],
+    "urgency": "medium"
+  },
+  "artifacts": {
+    "json_report": "reports\\report_executive_20251102_072634.json"
+  }
+}

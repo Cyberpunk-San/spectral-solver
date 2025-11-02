@@ -1,4 +1,3 @@
-# dashboard/app.py
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -10,6 +9,8 @@ import logging
 from datetime import datetime
 import sys
 import os
+import random
+import time
 from typing import Dict  
 
 
@@ -25,9 +26,24 @@ logger = logging.getLogger("streamlit_app")
 
 st.set_page_config(
     page_title="Spectral Solver - Industrial Analysis",
-    page_icon="^_____^",
+    page_icon="🎃",
     layout="wide"
 )
+
+class PumpkinGame:
+    def __init__(self):
+        self.score = 0
+        self.game_active = False
+        self.start_time = None
+        
+    def start_game(self):
+        self.score = 0
+        self.game_active = True
+        self.start_time = time.time()
+        
+    def catch_pumpkin(self):
+        self.score += 1
+        return True
 
 class StreamlitApp:
     def __init__(self):
@@ -35,11 +51,11 @@ class StreamlitApp:
         self.investigator = InvestigatorAgent("streamlit_investigator_001")
         self.reporter = ReporterAgent("streamlit_reporter_001")
         self.initialized = False
+        self.game = PumpkinGame()
     
     def initialize_agents(self):
         """Initialize agents synchronously"""
         try:
-            
             self.initialized = True
             logger.info("All agents initialized successfully")
             return True
@@ -47,6 +63,41 @@ class StreamlitApp:
             logger.error(f"Failed to initialize agents: {e}")
             st.error(f"Agent initialization failed: {str(e)}")
             return False
+
+    def show_pumpkin_game(self):
+        """Show the pumpkin catch game"""
+        st.markdown("### 🎃 Pumpkin Catch Game")
+        
+        if not self.game.game_active:
+            if st.button("Start Game", key="start_game"):
+                self.game.start_game()
+                st.rerun()
+        else:
+            elapsed = time.time() - self.game.start_time
+            time_left = 30 - int(elapsed)
+            
+            if time_left <= 0:
+                self.game.game_active = False
+                st.success(f"🎉 Game Over! Final Score: {self.game.score}")
+                if st.button("Play Again", key="play_again"):
+                    self.game.start_game()
+                    st.rerun()
+                return
+            
+            col1, col2 = st.columns([2, 1])
+            with col1:
+                st.write(f"**Score:** {self.game.score}")
+                st.write(f"**Time Left:** {time_left}s")
+                
+                if st.button("🎃 Catch Pumpkin!", key="catch_pumpkin", use_container_width=True):
+                    if self.game.catch_pumpkin():
+                        st.success(f"Caught! Score: {self.game.score}")
+                        st.rerun()
+            
+            with col2:
+                st.write("**How to play:**")
+                st.write("Click the button to catch pumpkins!")
+                st.write("You have 30 seconds!")
     
     def generate_sample_data(self, defect_type="bearing", duration=2, sample_rate=10000):
         """Generate sample vibration data with specified defects"""
@@ -216,37 +267,6 @@ class StreamlitApp:
             st.error(f"File processing error: {str(e)}")
             return None
 
-    def display_animated_visualizations(self, artifacts: Dict[str, str]):
-        """Display animated visualizations in Streamlit"""
-        animated_plots = {k: v for k, v in artifacts.items() if 'animation' in k or 'animated' in k}
-        
-        if not animated_plots:
-            return
-        
-        st.subheader("Animated Analysis")
-        st.write("Interactive animations showing the analysis process:")
-        
-        
-        for anim_name, anim_path in animated_plots.items():
-            if os.path.exists(anim_path):
-                try:
-                    
-                    display_name = anim_name.replace('_', ' ').title()
-                    
-                    with st.expander(f"{display_name}"):
-                        st.image(anim_path, use_column_width=True)
-                        
-                        
-                        with open(anim_path, "rb") as file:
-                            st.download_button(
-                                label=f"Download {display_name}",
-                                data=file,
-                                file_name=os.path.basename(anim_path),
-                                mime="image/gif"
-                            )
-                except Exception as e:
-                    st.warning(f"Could not display {anim_name}: {str(e)}")
-
     def display_results(self, results, source_type="demo"):
         """Display analysis results in Streamlit"""
         if not results:
@@ -304,38 +324,32 @@ class StreamlitApp:
         
         if reasoning and len(reasoning) > 0:
             with st.expander("View Investigation Reasoning"):
-                
                 clean_reasoning = reasoning.replace('##', '###').replace('# ', '## ')
                 st.markdown(clean_reasoning)
         
-        # === UPDATED VISUALIZATIONS SECTION ===
+        # Visualizations
         st.subheader("📈 Visualizations")
         
-        # analyzer artifacts
+        # analyzer artifacts (without animations)
         artifacts = results["analyzer"].get("artifacts", {})
-        if artifacts:
+        
+        # Filter out animations
+        static_plots = {k: v for k, v in artifacts.items() 
+                       if 'animation' not in k and 'animated' not in k}
+        
+        if static_plots:
+            st.write("**Static Visualizations:**")
+            col1, col2 = st.columns(2)
             
-            static_plots = {k: v for k, v in artifacts.items() if 'animation' not in k and 'animated' not in k}
-            animated_plots = {k: v for k, v in artifacts.items() if 'animation' in k or 'animated' in k}
+            displayed_artifacts = 0
+            for artifact_name, artifact_path in static_plots.items():
+                if artifact_path and os.path.exists(artifact_path):
+                    col = col1 if displayed_artifacts % 2 == 0 else col2
+                    with col:
+                        st.image(artifact_path, caption=f"{artifact_name.replace('_', ' ').title()}")
+                        displayed_artifacts += 1
             
-            #  static plots
-            if static_plots:
-                st.write("**Static Visualizations:**")
-                col1, col2 = st.columns(2)
-                
-                displayed_artifacts = 0
-                for artifact_name, artifact_path in static_plots.items():
-                    if artifact_path and os.path.exists(artifact_path):
-                        col = col1 if displayed_artifacts % 2 == 0 else col2
-                        with col:
-                            st.image(artifact_path, caption=f"{artifact_name.replace('_', ' ').title()}")
-                            displayed_artifacts += 1
-            
-            # animated visualizations
-            if animated_plots:
-                self.display_animated_visualizations(artifacts)
-            
-            if displayed_artifacts == 0 and not animated_plots:
+            if displayed_artifacts == 0:
                 self._create_fallback_visualization(results)
         else:
             self._create_fallback_visualization(results)
@@ -390,7 +404,7 @@ class StreamlitApp:
             )
         
         with col2:
-            # Generate executive summary text - FIXED INDENTATION
+            # Generate executive summary text
             exec_summary = f"""SPECTRAL SOLVER ANALYSIS REPORT
 ==============================
 Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
@@ -436,7 +450,6 @@ RECOMMENDED ACTIONS:
                     signal_data = np.random.normal(mean_val, std_val, 1000)
             
             if signal_data is not None and len(signal_data) > 0:
-                
                 preview_data = signal_data[:1000] if len(signal_data) > 1000 else signal_data
                 fig = px.line(y=preview_data, title="Signal Preview")
                 fig.update_layout(xaxis_title="Samples", yaxis_title="Amplitude")
@@ -460,7 +473,6 @@ RECOMMENDED ACTIONS:
             extract_numeric_features(features)
             
             if numeric_features:
-                
                 top_features = dict(sorted(numeric_features.items(), 
                                         key=lambda x: abs(x[1]), 
                                         reverse=True)[:8])
@@ -475,97 +487,107 @@ RECOMMENDED ACTIONS:
 def main():
     app = StreamlitApp()
     
-    st.title(" Spectral Solver - Industrial Vibration Analysis")
+    st.title("🎃 Spectral Solver - Industrial Vibration Analysis")
     st.write("AI-powered mechanical fault detection and predictive maintenance")
     
-    # Initialize agents
-    if not app.initialized:
-        if app.initialize_agents():
-            st.sidebar.success("✅ Agents initialized")
-        else:
-            st.sidebar.error("❌ Agent initialization failed")
+    # Pumpkin game button
+    if st.sidebar.button("🎮 Play Pumpkin Game"):
+        st.session_state.show_game = True
     
-    # Sidebar Configuration
-    st.sidebar.header("Configuration")
-    
-    analysis_mode = st.sidebar.radio(
-        "Analysis Mode",
-        ["demo", "file_upload"],
-        format_func=lambda x: " Demo Scenario" if x == "demo" else "📁 Upload File"
-    )
-    
-    sample_rate = st.sidebar.number_input("Sample Rate (Hz)", 1000, 50000, 10000)
-    rpm = st.sidebar.number_input("Machine RPM", 500, 5000, 1750)
-    machine_id = st.sidebar.text_input("Machine ID", "Motor-001")
-    
-    if analysis_mode == "demo":
-        st.sidebar.header("Demo Scenario")
-        defect_type = st.sidebar.selectbox(
-            "Select Defect Type",
-            ["normal", "bearing", "imbalance", "misalignment"],
-            format_func=lambda x: {
-                "normal": " Normal Operation",
-                "bearing": "Bearing Defect", 
-                "imbalance": " Rotor Imbalance",
-                "misalignment": " Shaft Misalignment"
-            }[x]
-        )
-        duration = st.sidebar.slider("Signal Duration (seconds)", 1, 10, 2)
+    if st.session_state.get('show_game', False):
+        app.show_pumpkin_game()
+        if st.button("⬅ Back to Analysis"):
+            st.session_state.show_game = False
+            st.rerun()
+    else:
+        # Initialize agents
+        if not app.initialized:
+            if app.initialize_agents():
+                st.sidebar.success("✅ Agents initialized")
+            else:
+                st.sidebar.error("❌ Agent initialization failed")
         
-        if st.button(" Run Demo Analysis", type="primary"):
-            with st.spinner("Generating sample data and running analysis..."):
-                # Generate sample data
-                signal, description = app.generate_sample_data(defect_type, duration, sample_rate)
-                
-                # Run analysis pipeline
-                results = asyncio.run(app.run_direct_analysis(
-                    signal, sample_rate, rpm, machine_id, defect_type
-                ))
-                
-                # Display results
-                if results:
-                    st.success("✅ Analysis completed successfully!")
-                    app.display_results(results, source_type="demo")
-                else:
-                    st.error("❌ Analysis failed. Please try again.")
-    
-    else:  # file_upload mode
-        st.sidebar.header("File Upload")
-        uploaded_file = st.sidebar.file_uploader(
-            "Upload Vibration Data File", 
-            type=['csv', 'json', 'txt', 'log'],
-            help="Supported formats: CSV, JSON, TXT, LOG files with vibration data"
+        # Sidebar Configuration
+        st.sidebar.header("Configuration")
+        
+        analysis_mode = st.sidebar.radio(
+            "Analysis Mode",
+            ["demo", "file_upload"],
+            format_func=lambda x: " Demo Scenario" if x == "demo" else "📁 Upload File"
         )
         
-        if uploaded_file is not None:
-            st.sidebar.success(f"✅ File uploaded: {uploaded_file.name}")
-            st.sidebar.write(f"**File type:** {uploaded_file.type}")
-            st.sidebar.write(f"**Size:** {len(uploaded_file.getvalue())} bytes")
+        sample_rate = st.sidebar.number_input("Sample Rate (Hz)", 1000, 50000, 10000)
+        rpm = st.sidebar.number_input("Machine RPM", 500, 5000, 1750)
+        machine_id = st.sidebar.text_input("Machine ID", "Motor-001")
+        
+        if analysis_mode == "demo":
+            st.sidebar.header("Demo Scenario")
+            defect_type = st.sidebar.selectbox(
+                "Select Defect Type",
+                ["normal", "bearing", "imbalance", "misalignment"],
+                format_func=lambda x: {
+                    "normal": " Normal Operation",
+                    "bearing": "Bearing Defect", 
+                    "imbalance": " Rotor Imbalance",
+                    "misalignment": " Shaft Misalignment"
+                }[x]
+            )
+            duration = st.sidebar.slider("Signal Duration (seconds)", 1, 10, 2)
             
-            if st.sidebar.button("🔍 Analyze Uploaded File", type="primary"):
-                with st.spinner("Processing uploaded file through analysis pipeline..."):
-                    # Process uploaded file
-                    results = asyncio.run(app.process_uploaded_file(
-                        uploaded_file, sample_rate, rpm, machine_id
+            if st.button(" Run Demo Analysis", type="primary"):
+                with st.spinner("Generating sample data and running analysis..."):
+                    # Generate sample data
+                    signal, description = app.generate_sample_data(defect_type, duration, sample_rate)
+                    
+                    # Run analysis pipeline
+                    results = asyncio.run(app.run_direct_analysis(
+                        signal, sample_rate, rpm, machine_id, defect_type
                     ))
                     
                     # Display results
                     if results:
                         st.success("✅ Analysis completed successfully!")
-                        app.display_results(results, source_type="uploaded")
+                        app.display_results(results, source_type="demo")
                     else:
-                        st.error("❌ Analysis failed. Please check the file format and try again.")
+                        st.error("❌ Analysis failed. Please try again.")
+        
+        else:  # file_upload mode
+            st.sidebar.header("File Upload")
+            uploaded_file = st.sidebar.file_uploader(
+                "Upload Vibration Data File", 
+                type=['csv', 'json', 'txt', 'log'],
+                help="Supported formats: CSV, JSON, TXT, LOG files with vibration data"
+            )
+            
+            if uploaded_file is not None:
+                st.sidebar.success(f"✅ File uploaded: {uploaded_file.name}")
+                st.sidebar.write(f"**File type:** {uploaded_file.type}")
+                st.sidebar.write(f"**Size:** {len(uploaded_file.getvalue())} bytes")
+                
+                if st.sidebar.button("🔍 Analyze Uploaded File", type="primary"):
+                    with st.spinner("Processing uploaded file through analysis pipeline..."):
+                        # Process uploaded file
+                        results = asyncio.run(app.process_uploaded_file(
+                            uploaded_file, sample_rate, rpm, machine_id
+                        ))
+                        
+                        # Display results
+                        if results:
+                            st.success("✅ Analysis completed successfully!")
+                            app.display_results(results, source_type="uploaded")
+                        else:
+                            st.error("❌ Analysis failed. Please check the file format and try again.")
 
-    # System Information
-    with st.sidebar.expander("System Info"):
-        st.write("**Agents Ready:**")
-        if app.initialized:
-            st.write("• ✅ Universal Analyzer")
-            st.write("• ✅ AI Investigator") 
-            st.write("• ✅ Multi-Format Reporter")
-        else:
-            st.write("• 🔄 Initializing agents...")
-        st.write(f"**Last Updated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        # System Information
+        with st.sidebar.expander("System Info"):
+            st.write("**Agents Ready:**")
+            if app.initialized:
+                st.write("• ✅ Universal Analyzer")
+                st.write("• ✅ AI Investigator") 
+                st.write("• ✅ Multi-Format Reporter")
+            else:
+                st.write("• 🔄 Initializing agents...")
+            st.write(f"**Last Updated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
 if __name__ == "__main__":
     main()

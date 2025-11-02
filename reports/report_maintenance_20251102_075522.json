@@ -1,0 +1,61 @@
+{
+  "report_id": "report_maintenance_20251102_075522",
+  "audience": "maintenance",
+  "title": "Maintenance Work Order - Motor-001",
+  "summary": "Required: . 4 maintenance actions identified.",
+  "findings": [
+    {
+      "section": "Problem Description",
+      "content": ""
+    },
+    {
+      "section": "Likely Causes",
+      "content": []
+    },
+    {
+      "section": "Anomalies Detected",
+      "content": "0 issues found"
+    }
+  ],
+  "recommendations": [
+    {
+      "action": "001 at RPM 1750 with a sample rate of 10kHz:",
+      "priority": "medium",
+      "estimated_time": "1-2 hours",
+      "tools_required": [
+        "Vibration meter",
+        "Basic hand tools"
+      ]
+    },
+    {
+      "action": "Continue regular data collection to establish baseline patterns over time. This will help in identifying deviations that may indicate emerging problems.",
+      "priority": "medium",
+      "estimated_time": "1-2 hours",
+      "tools_required": [
+        "Vibration meter",
+        "Basic hand tools"
+      ]
+    },
+    {
+      "action": "Investigate and implement advanced analytics, such as machine learning algorithms capable of detecting subtle changes indicative of early signs of wear or failure not immediately apparent through traditional analysis methods.",
+      "priority": "medium",
+      "estimated_time": "1-2 hours",
+      "tools_required": [
+        "Vibration meter",
+        "Basic hand tools"
+      ]
+    },
+    {
+      "action": "Review the sensor placement strategy to ensure optimal coverage for capturing representative vibration data from all critical components within Motor-001.",
+      "priority": "medium",
+      "estimated_time": "1-2 hours",
+      "tools_required": [
+        "Vibration meter",
+        "Basic hand tools"
+      ]
+    }
+  ],
+  "urgency": "low",
+  "confidence": 0.7,
+  "timestamp": "2025-11-02T02:25:22.331210+00:00"
+}

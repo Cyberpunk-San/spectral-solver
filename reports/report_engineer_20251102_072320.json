@@ -1,0 +1,60 @@
+{
+  "report_id": "report_engineer_20251102_072320",
+  "audience": "engineer",
+  "title": "Technical Diagnostic Report - Unknown Machine",
+  "summary": "Analysis detected 0 anomalies. Primary diagnosis: Investigation failed due to technical error",
+  "findings": [
+    {
+      "section": "Anomaly Analysis",
+      "content": []
+    },
+    {
+      "section": "Signal Features",
+      "content": {
+        "rms_vibration": 0,
+        "kurtosis": 0,
+        "crest_factor": 0,
+        "dominant_frequencies": []
+      }
+    },
+    {
+      "section": "Root Cause Analysis",
+      "content": [
+        "System error during analysis"
+      ]
+    },
+    {
+      "section": "Technical Details",
+      "content": {
+        "statistical": {
+          "value": {
+            "mean": 0.00026861244322465706,
+            "std": 0.07322442173261311,
+            "variance": 0.005361815938075582,
+            "range": 0.30235368101799764
+          }
+        },
+        "distributional": {
+          "value": {
+            "skewness": -0.0020284236803553824,
+            "kurtosis": -1.3011683696045107
+          }
+        },
+        "temporal": {}
+      }
+    }
+  ],
+  "recommendations": [
+    {
+      "action": "Retry investigation",
+      "priority": "high"
+    },
+    {
+      "action": "Check system configuration",
+      "priority": "high"
+    }
+  ],
+  "urgency": "low",
+  "confidence": 0.0,
+  "timestamp": "2025-11-02T01:53:20.076693+00:00"
+}

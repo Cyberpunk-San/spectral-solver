@@ -1,0 +1,37 @@
+{
+  "report_id": "report_manager_20251102_072320",
+  "audience": "manager",
+  "title": "Equipment Health Report - Unknown Machine",
+  "summary": "Diagnosis: Investigation failed due to technical error. Business Impact: Low - Monitor condition",
+  "findings": [
+    {
+      "section": "Executive Summary",
+      "content": "Investigation failed due to technical error"
+    },
+    {
+      "section": "Business Impact",
+      "content": "Low - Monitor condition"
+    },
+    {
+      "section": "Financial Implications",
+      "content": "$ - Routine check"
+    },
+    {
+      "section": "Confidence Level",
+      "content": "0.0%"
+    }
+  ],
+  "recommendations": [
+    {
+      "action": "Retry investigation",
+      "business_case": "Preventive maintenance"
+    },
+    {
+      "action": "Check system configuration",
+      "business_case": "Preventive maintenance"
+    }
+  ],
+  "urgency": "low",
+  "confidence": 0.0,
+  "timestamp": "2025-11-02T01:53:20.085666+00:00"
+}
