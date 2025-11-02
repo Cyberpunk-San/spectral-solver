@@ -94,7 +94,25 @@ https://youtu.be/PwTAFrqujRY?si=dWdYGk5if_KVRfPN
 **Visualization**: Plotly, Matplotlib with animation capabilities  
 **Backend**: Redis for message brokering, Streamlit for web interface  
 **Security**: Cryptography (RSA-2048, Fernet), secure message signing  
-**Deployment**: Docker containerization, microservices architecture  
+**Deployment**: Docker containerization, microservices architecture 
+
+## 🖼️ Application Gallery
+
+<div align="center">
+
+<img src="https://github.com/user-attachments/assets/8f974eb8-f0db-4dda-ab11-9ad0b9a4ba94" width="180" height="120" title="Dashboard">
+<img src="https://github.com/user-attachments/assets/f79b87c8-336d-456e-9c84-28bb8eede461" width="180" height="120" title="Demo Analysis">
+<img src="https://github.com/user-attachments/assets/8b82ad3a-fb3e-42f3-8d73-dd8d57f174aa" width="180" height="120" title="File Upload">
+<img src="https://github.com/user-attachments/assets/ea25de0e-e9ff-4a10-9487-2f089e30a3be" width="180" height="120" title="Anomaly Detection">
+
+<br>
+
+<img src="https://github.com/user-attachments/assets/f2d928e9-d256-49b0-b322-e1253e4870e3" width="180" height="120" title="Signal Analysis">
+<img src="https://github.com/user-attachments/assets/0b50582d-ea5c-473e-a5ed-a37a8dc5fbbc" width="180" height="120" title="Results">
+<img src="https://github.com/user-attachments/assets/d0f963e1-90d3-436f-81e1-73368b035adc" width="180" height="120" title="Multi-Agent">
+<img src="https://github.com/user-attachments/assets/88522283-981a-49ff-97b2-cec20ae99c03" width="180" height="120" title="Real-time">
+
+</div>
 
 ## Quick Start Deployment
 
