@@ -4,6 +4,10 @@
 **Coral Protocol-powered agent coordination framework**  
 **Automated anomaly detection, root cause analysis, and reporting**
 
+## video
+
+https://youtu.be/PwTAFrqujRY?si=dWdYGk5if_KVRfPN
+
 ## The Data Scientist's Challenge & Solution
 
 **Problem**: Data scientists waste 60% of time on data preprocessing, visualization, and report generation instead of actual analysis. Industrial data requires specialized signal processing expertise that most data scientists lack.
