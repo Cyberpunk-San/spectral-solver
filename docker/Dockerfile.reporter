@@ -1,0 +1,22 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY agents/ ./agents/
+COPY utils/ ./utils/
+COPY coral_s.py .
+
+RUN useradd -m -u 1002 spectral
+RUN mkdir -p artifacts reports && chown -R spectral:spectral artifacts reports
+
+USER spectral
+
+CMD ["python", "-m", "agents.reporter_agent"]

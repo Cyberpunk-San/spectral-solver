@@ -1,0 +1,87 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    restart: unless-stopped
+    # NO HEALTH CHECKS
+
+  analyzer:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.analyzer
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - OLLAMA_URL=http://ollama:11434
+    depends_on:
+      - redis
+    volumes:
+      - spectral_artifacts:/app/artifacts
+    restart: unless-stopped
+
+  investigator:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.investigator
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - OLLAMA_URL=http://ollama:11434
+    depends_on:
+      - redis
+    volumes:
+      - spectral_artifacts:/app/artifacts
+    restart: unless-stopped
+
+  reporter:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.reporter
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    depends_on:
+      - redis
+    volumes:
+      - spectral_artifacts:/app/artifacts
+    restart: unless-stopped
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.analyzer
+    ports:
+      - "8501:8501"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - OLLAMA_URL=http://ollama:11434
+    depends_on:
+      - redis
+    volumes:
+      - spectral_artifacts:/app/artifacts
+    restart: unless-stopped
+    command: streamlit run dashboard/app.py --server.port=8501 --server.address=0.0.0.0
+
+volumes:
+  redis_data:
+  ollama_data:
+  spectral_artifacts:
