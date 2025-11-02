@@ -96,7 +96,7 @@ https://youtu.be/PwTAFrqujRY?si=dWdYGk5if_KVRfPN
 **Security**: Cryptography (RSA-2048, Fernet), secure message signing  
 **Deployment**: Docker containerization, microservices architecture 
 
-## 🖼️ Application Gallery
+## Application Gallery
 
 <div align="center">
 
