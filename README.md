@@ -119,7 +119,7 @@ https://youtu.be/PwTAFrqujRY?si=dWdYGk5if_KVRfPN
 ```bash
 # 1. Clone and setup
 git clone https://github.com/Cyberpunk-San/spectral-solver.git
-cd spectral-solver-private
+cd spectral-solver
 pip install -r requirements.txt
 
 # 2. Start Redis (message broker)
